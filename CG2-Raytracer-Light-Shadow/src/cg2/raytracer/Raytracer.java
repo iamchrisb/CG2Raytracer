@@ -23,7 +23,7 @@ public class Raytracer implements Painter{
 		Hit h = scene.intersect(ray);
 		
 		if(h != null){
-			return h.shade(scene.getLights());
+			return h.shade();
 		}
 
 		return new Color(0,0,0);

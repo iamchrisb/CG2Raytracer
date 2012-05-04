@@ -1,10 +1,6 @@
 package cg2.raytracer;
 
-import java.util.ArrayList;
-
-import cg2.lightsources.Light;
 import cg2.raytracer.shapes.Shape;
-import cg2.raytracer.shapes.Sphere;
 import cg2.vecmath.Color;
 import cg2.vecmath.Vector;
 
@@ -16,7 +12,7 @@ public class Hit {
 	private Vector n;
 	private Vector koords;
 	private Ray ray;
-	private float viewability;
+	
 
 	/**
 	 * 
@@ -38,86 +34,12 @@ public class Hit {
 		ray = r;
 	}
 
-	public Color shade(ArrayList<Light> arrayList) {
+	public Color shade() {
 
-		Color diffuse_out = new Color(0, 0, 0);
-		Color specular_out = new Color(0, 0, 0);
-		Color ambient = new Color(0, 0, 0);
+		Shader s = new Shader();
+		int j = 5;
+		return s.shade(this , j);
 
-		for (int i = 0; i < arrayList.size(); i++) {
-			Light light = arrayList.get(i);
-			getViewability(light);
-
-			if (viewability == 1) {
-				Color diffuse = new Color(0, 0, 0);
-				Color specular = new Color(0, 0, 0);
-
-				Vector s = this.getHitpoint().sub(light.getPosition());
-				s = s.normalize();
-				Vector n = this.getN().normalize();
-
-				float sn = n.dot(s);
-
-				if (sn > 0) {
-					diffuse = getDiffusePart(light, sn);
-					diffuse_out = diffuse_out.add(diffuse);
-				}
-
-				Vector r = n.mult(2 * (n.dot(s))).sub(s);
-				r = r.normalize();
-
-				if (n.dot(s) > 0) {
-
-					if (r.dot(ray.getNormalizedDirection()) > 0) {
-						specular = light.getColor();
-
-						float vr = ray.getNormalizedDirection().dot(r);
-						float vra = (float) Math.pow(vr, this.getType()
-								.getMaterial().getPhongExponent());
-						specular = specular.modulate(vra).modulate(viewability);
-						specular_out = specular_out.add(specular);
-					}
-
-				}
-			}
-
-		}
-
-		ambient = ambient.add(this.getType().getMaterial().getkAmbient());
-
-		diffuse_out = getType().getMaterial().getkDiffuse()
-				.modulate(diffuse_out);
-		specular_out = getType().getMaterial().getkSpekular()
-				.modulate(specular_out);
-
-		Color add = new Color(0, 0, 0);
-		add = diffuse_out;
-		add = add.add(specular_out);
-		add = add.add(ambient);
-
-		return add;
-
-	}
-
-	private void getViewability(Light light) {
-		Ray r = new Ray(koords, light.getPosition().sub(koords));
-		float distanceA = koords.sub(light.getPosition()).length();
-		Hit newH = Scene.getInstance().intersect(r);
-
-		if (newH != null) {
-			if (distanceA < newH.getDistance() || newH.getDistance() < 0.000001) {
-				viewability = 1;
-			} else {
-				viewability = 0;
-			}
-		} else {
-			viewability = 1;
-		}
-
-	}
-
-	private Color getDiffusePart(Light light, float sn) {
-		return light.getColor().modulate(sn);
 	}
 
 	/**
@@ -142,6 +64,14 @@ public class Hit {
 		if (this.distance < h.distance)
 			return this;
 		return h;
+	}
+	
+	public Ray getRay() {
+		return ray;
+	}
+
+	public void setRay(Ray ray) {
+		this.ray = ray;
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package cg2.raytracer;
 
 import java.util.ArrayList;
 
-import cg2.depricated.LightSource;
 import cg2.lightsources.Light;
 import cg2.raytracer.shapes.Shape;
 import cg2.vecmath.Color;

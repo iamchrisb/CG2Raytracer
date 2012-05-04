@@ -1,11 +1,9 @@
 package cg2.main;
 
-import cg2.depricated.SpecularLight;
 import cg2.lightsources.Light;
 import cg2.raytracer.Camera;
 import cg2.raytracer.Raytracer;
 import cg2.raytracer.Scene;
-import cg2.raytracer.shapes.Material;
 import cg2.raytracer.shapes.ParallelQuader;
 import cg2.raytracer.shapes.Plane;
 import cg2.raytracer.shapes.Sphere;
