@@ -35,10 +35,10 @@ public class Hit {
 	}
 
 	public Color shade() {
-
+		
 		Shader s = new Shader();
-		int j = 5;
-		return s.shade(this , j);
+		int rekIndex = 1;
+		return s.shade(this , rekIndex);
 
 	}
 

@@ -11,10 +11,9 @@ public class Shader {
 
 	private float viewability;
 
-	public Color shade(Hit h, int j) {
+	public Color shade(Hit h, int reflectionIndex) {
 
-		j--;
-		System.out.println(j);
+		// System.out.println(j);
 		hit = h;
 		/** define the outer color terms **/
 		Color diffuse_out = new Color(0, 0, 0);
@@ -35,7 +34,7 @@ public class Shader {
 
 			if (newH != null) {
 				if (distanceA < newH.getDistance()
-						|| newH.getDistance() < 0.000001) {
+						|| newH.getDistance() < 0.0001) {
 					viewability = 1;
 				} else {
 					viewability = 0;
@@ -43,6 +42,8 @@ public class Shader {
 			} else {
 				viewability = 1;
 			}
+			
+			viewability = 1;
 
 			/** gets the shadow for the hitpoint **/
 			if (viewability == 1) {
@@ -96,20 +97,22 @@ public class Shader {
 		/** get the reflection term **/
 		// rv = 2( n * v )n - v
 
-		Vector rv = hit
-				.getN()
-				.sub(hit.getRay().getNormalizedDirection())
-				.mult((2 * (hit.getN().dot(hit.getRay()
-						.getNormalizedDirection()))));
+		Vector v = hit.getRay().getNormalizedDirection().mult(1);
+		Vector n = hit.getN();
 
-		Shader rek = new Shader();
+		Vector rv = n.mult((n.dot(v)) * (2)).sub(v);
+		
+		Vector rvDirection = hit.getHitpoint().sub(rv);
 		neo = Scene.getInstance().intersect(
-				new Ray(hit.getHitpoint(), hit.getHitpoint().sub(rv)));
+				new Ray(hit.getHitpoint(), rvDirection.mult(-1)));
 
-		Color kr = new Color(0.15f, 0.15f, 0.15f);
-		if (j > 0 && neo != null) {
-			add = add.add(rek.shade(neo, j).modulate(kr));
+		Color kr = new Color(0.35f, 0.35f, 0.35f);
+		if (reflectionIndex > 0 && neo != null && neo.getDistance() > 0.00001) {
+			reflectionIndex--;
+			add = add.add((this.shade(neo, reflectionIndex).modulate(kr)));
+//			add = (this.shade(neo, reflectionIndex).modulate(kr));
 		}
+
 		return add;
 
 	}

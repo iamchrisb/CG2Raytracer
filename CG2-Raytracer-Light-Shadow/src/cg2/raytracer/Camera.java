@@ -19,8 +19,8 @@ public class Camera {
 
 	public Camera() {
 		this.upVector = new Vector(0, 1, 0);
-		this.eye = new Vector(0, 0, 0f);
-		this.w = 1000f;
+		this.eye = new Vector(0.f, 0.0f, 10);
+		this.w = 1000f; 
 	}
 
 	/**

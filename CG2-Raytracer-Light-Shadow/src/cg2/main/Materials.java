@@ -13,7 +13,7 @@ public class Materials {
 	
 	public static Material white_grey = new Material(new Color(0.75f,0.75f,0.75f),new Color(1.f,1.f,1.f), new Color(0.5f,0.5f,0.5f), 1000);
 	
-	public static Material darkgrey = new Material(new Color(0.2f,0.2f,0.2f) , new Color(0.2f,0.2f,0.2f) , new Color(0.1f,0.1f,0.1f), 0);
+	public static Material darkgrey = new Material(new Color(0.2f,0.2f,0.2f) , new Color(0.2f,0.2f,0.2f) , new Color(0.1f,0.1f,0.1f), 1000);
 	
 	public static Material blue = new Material(new Color(0.f,0.0f,0.1f),new Color(0.f,0.0f,1.0f), new Color(0f,0f,0.1f), 1000 );
 	

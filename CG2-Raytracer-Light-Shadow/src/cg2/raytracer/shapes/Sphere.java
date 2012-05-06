@@ -70,18 +70,13 @@ public class Sphere implements Shape, Raytracable, Materializable {
 		float d1 = -(x0.dot(v)) - test;
 		float d2 = -(x0.dot(v)) + test;
 		float min = Math.min(d1, d2);
-		//float max = Math.max(d1, d2);
 		if (d1 > epsilon && d2 > epsilon) {
-//			System.out.println("d1: " + d1 + " , d2: " + d2 + " = = " + min);
 			return min;
 		} else if(d1 < epsilon && d2 < epsilon ){
-//			System.out.println(d1 + " , " + d2 + "BEIDE KLEINER EPSILON");
 			return -23423423;
 		} else if(d1 < epsilon && d2 > epsilon){
-//			System.out.println(d1 + " , " + d2 + "D1 KLEINER EPSILON , D2 GRÖSSER EPSILON");
 			return d2;
 		}else{
-//			System.out.println(d1 + " , " + d2 + "D1 GRÖSSER EPSILON , D2 KLEINER EPSILON");
 			return d1;
 		}
 
