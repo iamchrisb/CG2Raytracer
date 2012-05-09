@@ -44,7 +44,7 @@ public class Plane implements Shape, Raytracable, Materializable {
 
 		// if the plane is behind the cam return null, else..
 		if (t > 0.00001) {
-			return new Hit(c, t, this, r.getPoint(t), this.n.mult(-1), r);
+			return new Hit(c, t, this, r.getPoint(t), this.n.mult(1), r);
 		} else {
 			return null;
 		}

@@ -1,6 +1,7 @@
 package cg2.raytracer;
 
 import cg2.lightsources.Light;
+import cg2.raytracer.shapes.Plane;
 import cg2.vecmath.Color;
 import cg2.vecmath.Vector;
 
@@ -52,7 +53,9 @@ public class Shader {
 				Vector s = hit.getHitpoint().sub(light.getPosition())
 						.normalize();
 				Vector norm = hit.getN().normalize();
-
+				if(hit.getType() instanceof Plane){
+					norm = norm.mult(-1);
+				}
 				float sn = norm.dot(s);
 
 				if (sn > 0) {
@@ -97,19 +100,19 @@ public class Shader {
 		/** get the reflection term **/
 		// rv = 2( n * v )n - v
 
-		Vector v = hit.getRay().getNormalizedDirection().mult(1);
-		Vector n = hit.getN();
-
+		Vector v = hit.getRay().getNormalizedDirection().mult(-1);
+		Vector n = hit.getN().normalize();
+		
 		Vector rv = n.mult((n.dot(v)) * (2)).sub(v);
 		
-		Vector rvDirection = hit.getHitpoint().sub(rv);
+//		Vector rvDirection = hit.getHitpoint().sub(rv);
 		neo = Scene.getInstance().intersect(
-				new Ray(hit.getHitpoint(), rvDirection.mult(-1)));
+				new Ray(hit.getHitpoint(), rv));
 
-		Color kr = new Color(0.35f, 0.35f, 0.35f);
-		if (reflectionIndex > 0 && neo != null && neo.getDistance() > 0.00001) {
+		Color kr = new Color(0.7f, 0.7f, 0.7f);
+		if (reflectionIndex > 0 && neo != null ) {
 			reflectionIndex--;
-			add = add.add((this.shade(neo, reflectionIndex).modulate(kr)));
+			add = add.add((this.shade(neo, reflectionIndex))).modulate(kr);
 //			add = (this.shade(neo, reflectionIndex).modulate(kr));
 		}
 

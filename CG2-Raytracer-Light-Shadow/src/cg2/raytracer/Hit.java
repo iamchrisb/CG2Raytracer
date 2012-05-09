@@ -37,7 +37,7 @@ public class Hit {
 	public Color shade() {
 		
 		Shader s = new Shader();
-		int rekIndex = 1;
+		int rekIndex = 2;
 		return s.shade(this , rekIndex);
 
 	}
