@@ -2,7 +2,7 @@ package cg2.raytracer.shapes;
 
 import cg2.vecmath.Color;
 
-public class Material {
+public class Material implements IMaterial{
 	
 	private Color kAmbient;
 	private Color kDiffuse;
@@ -11,7 +11,7 @@ public class Material {
 	private float phongExponent;
 
 
-	public Material(Color kdif ,Color kspec,  Color ambient, float phongExponent) {
+	public Material(Color kdif ,Color kspec,  Color ambient, float phongExponent ) {
 		this.setkDiffuse(kdif);
 		this.setkSpekular(kspec);
 		this.setPhongExponent(phongExponent);
@@ -48,6 +48,11 @@ public class Material {
 
 	public void setPhongExponent(float phongExponent) {
 		this.phongExponent = phongExponent;
+	}
+
+	@Override
+	public boolean isRefactorable() {
+		return false;
 	}
 	
 }

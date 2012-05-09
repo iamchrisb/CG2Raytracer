@@ -1,0 +1,13 @@
+INDEX VERSION 1.126+D:\uni\projekte\GitRepositories\CG2Raytracer\.metadata\.plugins\org.eclipse.jdt.core
+3270002986.index
+3730526690.index
+3277441100.index
+4251467834.index
+3737177765.index
+4180502689.index
+2877109961.index
+2996888180.index
+2768074754.index
+3000053649.index
+1789169078.index
+3585733931.index

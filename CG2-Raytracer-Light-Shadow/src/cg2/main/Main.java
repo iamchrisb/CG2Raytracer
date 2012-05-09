@@ -2,6 +2,7 @@ package cg2.main;
 
 import cg2.lightsources.Light;
 import cg2.raytracer.Camera;
+import cg2.raytracer.Materials;
 import cg2.raytracer.Raytracer;
 import cg2.raytracer.Scene;
 import cg2.raytracer.shapes.ParallelQuader;
@@ -52,7 +53,7 @@ public class Main {
 		Sphere k3b = new Sphere(new Vector(-0.2f , -.89f, -2.3f) , 0.005f , Materials.blue );
 //		Sphere k4 = new Sphere(new Vector(3f, -2.2f, -28f), 1.0f, new Color(0.5f, 1.0f,0.5f));
 //		Sphere k5 = new Sphere(new Vector(-3, 1.3f, -8f), 0.6f, new Color(0.5f, 1.0f,0.5f));
-		Sphere klittle = new Sphere(new Vector(0.07f, -0.1f, -2.5f) , 0.002f , Materials.green);
+//		Sphere klittle = new Sphere(new Vector(0.07f, -0.1f, -2.5f) , 0.002f , Materials.green);
 		
 		
 //		s.addShape(k1);
@@ -63,10 +64,10 @@ public class Main {
 //		s.addShape(k5);
 //		s.addShape(klittle);
 		
-		ParallelQuader q1 = new ParallelQuader(new Vector(0.3f, -0.96f, -3.5f), new Vector(0.5f, -0.7f, -2), Materials.yellow);
+		ParallelQuader q1 = new ParallelQuader(new Vector(0.3f, -0.96f, -3.5f), new Vector(0.5f, -0.7f, 2), Materials.darkgrey);
 		s.addShape(q1);
 		
-		Color lc = new Color(0.1f,0.1f,0.1f);
+		Color lc = new Color(0.15f,0.15f,0.3f);
 		
 		Light dlx = new Light();
 		dlx.setColor(lc);
@@ -80,38 +81,38 @@ public class Main {
 		
 		Light dl = new Light();
 		dl.setColor(lc);
-		dl.setPosition(new Vector(0.1f , 1.f, -2.5f));
+		dl.setPosition(new Vector(0.0f , 1.f, -2.5f));
 		s.addLightSource(dl);
 		
 		Light dll = new Light();
 		dll.setColor(lc);
-		dll.setPosition(new Vector(0.3f , 1.f, -2.5f));
+		dll.setPosition(new Vector(0.5f , 1.f, -2.5f));
 		s.addLightSource(dll);
 		
 		Light dl1 = new Light();
 		dl1.setColor(lc);
-		dl1.setPosition(new Vector(-0.1f , 1.f, -2.5f));
+		dl1.setPosition(new Vector(-0.5f , 1.f, -2.5f));
 		s.addLightSource(dl1);
 		
 		Light dl2 = new Light();
-		dl2.setColor(new Color(0.8f, 0.8f, 0.8f));
-		dl2.setPosition(new Vector(-0.3f , 1.f, -2.5f));
+		dl2.setColor(lc);
+		dl2.setPosition(new Vector(-1.f , 1.f, -2.5f));
 		s.addLightSource(dl2);
 		
 		Light dl2b = new Light();
-		dl2b.setColor(new Color(0.8f, 0.8f, 0.8f));
-		dl2b.setPosition(new Vector(0.5f , 1.f, -2.5f));
+		dl2b.setColor(lc);
+		dl2b.setPosition(new Vector(1.f , 1.f, -2.5f));
 		s.addLightSource(dl2b);
 		
 		Light dl3 = new Light();
-		dl3.setColor(new Color(0.8f, 0.8f, 0.8f));
-		dl3.setPosition(new Vector(-14, 14, -20.f));
-//		s.addLightSource(dl3);
+		dl3.setColor(lc);
+		dl3.setPosition(new Vector(-.75f , 1.f, -2.5f));
+		s.addLightSource(dl3);
 		
 		Light dl4 = new Light();
-		dl4.setColor(new Color(0.6f, 0.6f, 0.6f));
-		dl4.setPosition(new Vector(-14, 14, -10.f));
-//		s.addLightSource(dl4);
+		dl4.setColor(lc);
+		dl4.setPosition(new Vector(0.75f , 1.f, -2.5f));
+		s.addLightSource(dl4);
 		
 		Light dlHigh = new Light();
 		dlHigh.setColor(new Color(0.7f, 0.7f, 0.7f));

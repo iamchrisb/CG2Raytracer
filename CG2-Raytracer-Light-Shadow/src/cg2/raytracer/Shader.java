@@ -44,7 +44,7 @@ public class Shader {
 				viewability = 1;
 			}
 			
-			viewability = 1;
+//			viewability = 1;
 
 			/** gets the shadow for the hitpoint **/
 			if (viewability == 1) {
@@ -97,7 +97,7 @@ public class Shader {
 		add = add.add(specular_out);
 		add = add.add(ambient);
 
-		/** get the reflection term **/
+		/** add the reflection term **/
 		// rv = 2( n * v )n - v
 
 		Vector v = hit.getRay().getNormalizedDirection().mult(-1);
@@ -105,7 +105,6 @@ public class Shader {
 		
 		Vector rv = n.mult((n.dot(v)) * (2)).sub(v);
 		
-//		Vector rvDirection = hit.getHitpoint().sub(rv);
 		neo = Scene.getInstance().intersect(
 				new Ray(hit.getHitpoint(), rv));
 
@@ -113,9 +112,40 @@ public class Shader {
 		if (reflectionIndex > 0 && neo != null ) {
 			reflectionIndex--;
 			add = add.add((this.shade(neo, reflectionIndex))).modulate(kr);
-//			add = (this.shade(neo, reflectionIndex).modulate(kr));
 		}
+		
+		/** add the refraction term **/
 
+		if(hit.getType().getMaterial().isRefactorable()){
+			
+			float n1 = 1.000f;
+			float n2 = 1.333f;
+			
+			float cos = hit.getRay().getNormalizedDirection().dot(hit.getN().normalize());
+			float cos2 = (float) Math.pow(cos, 2);
+			
+			float nCheck = (float) ((float) Math.pow((n1 / n2), 2) * ( 1 - cos2));
+			
+			if(nCheck <= 1){
+				
+				float r0 = (float) Math.pow((( n1 - n2) / ( n1 + n2 )) , 2);
+				float r = (float) (r0 + ( 1 - r0 )*(Math.pow((1 - cos2), 5)));
+				float t = 1 - r;
+				
+				float nDiv = n1 / n2;
+				
+				Vector i = hit.getRay().getNormalizedDirection();
+				Vector nRef = hit.getN();
+				
+				Vector tRef = i.mult(nDiv).add( nRef.mult((float) (Math.pow(nDiv, 2) * cos2 ) ));
+				
+				Scene.getInstance().intersect(new Ray(hit.getHitpoint(), tRef.mult(-1)));
+			}
+			
+			
+		}
+		
+		/** return the final color **/
 		return add;
 
 	}

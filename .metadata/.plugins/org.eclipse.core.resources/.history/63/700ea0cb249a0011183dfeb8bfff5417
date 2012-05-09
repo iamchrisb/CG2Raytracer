@@ -1,0 +1,12 @@
+package cg2.raytracer.shapes;
+
+import cg2.vecmath.Color;
+
+public class MaterialRefrac {
+
+	public MaterialRefrac(Color kdif, Color kspec, Color ambient,
+			float phongExponent , float refractoreIndex) {
+
+	}
+
+}
