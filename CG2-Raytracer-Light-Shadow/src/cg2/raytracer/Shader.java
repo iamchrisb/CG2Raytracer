@@ -1,9 +1,12 @@
 package cg2.raytracer;
 
-import cg2.lightsources.Light;
+import cg2.lightsources.PointLight;
+import cg2.material.Materials;
 import cg2.raytracer.shapes.Plane;
+import cg2.raytracer.shapes.Sphere;
 import cg2.vecmath.Color;
 import cg2.vecmath.Vector;
+import cg2.raytracer.shapes.*;
 
 public class Shader {
 
@@ -21,7 +24,9 @@ public class Shader {
 		Color specular_out = new Color(0, 0, 0);
 		Color ambient = new Color(0, 0, 0);
 
-		Light light;
+		PointLight light;
+
+		/** iterate over all lightsources and add the terms if necessary **/
 
 		for (int i = 0; i < Scene.getInstance().getLights().size(); i++) {
 			light = Scene.getInstance().getLights().get(i);
@@ -43,8 +48,8 @@ public class Shader {
 			} else {
 				viewability = 1;
 			}
-			
-//			viewability = 1;
+
+			// viewability = 1;
 
 			/** gets the shadow for the hitpoint **/
 			if (viewability == 1) {
@@ -53,7 +58,7 @@ public class Shader {
 				Vector s = hit.getHitpoint().sub(light.getPosition())
 						.normalize();
 				Vector norm = hit.getN().normalize();
-				if(hit.getType() instanceof Plane){
+				if (hit.getType() instanceof Plane) {
 					norm = norm.mult(-1);
 				}
 				float sn = norm.dot(s);
@@ -75,8 +80,10 @@ public class Shader {
 						float vr = hit.getRay().getNormalizedDirection().dot(r);
 						float vra = (float) Math.pow(vr, hit.getType()
 								.getMaterial().getPhongExponent());
-						specular_out = specular_out.add(light.getColor()
-								.modulate(vra));
+						if (vra > Math.toRadians(2)) {
+							specular_out = specular_out.add(light.getColor()
+									.modulate(vra));
+						}
 					}
 
 				}
@@ -99,55 +106,90 @@ public class Shader {
 
 		/** add the reflection term **/
 		// rv = 2( n * v )n - v
-
-		Vector v = hit.getRay().getNormalizedDirection().mult(-1);
+		//
+		Vector v = hit.getRay().getNormalizedDirection().mult(-1f);
 		Vector n = hit.getN().normalize();
-		
+
 		Vector rv = n.mult((n.dot(v)) * (2)).sub(v);
-		
-		neo = Scene.getInstance().intersect(
-				new Ray(hit.getHitpoint(), rv));
+
+		neo = Scene.getInstance().intersect(new Ray(hit.getHitpoint(), rv));
 
 		Color kr = new Color(0.7f, 0.7f, 0.7f);
-		if (reflectionIndex > 0 && neo != null ) {
-			reflectionIndex--;
-			add = add.add((this.shade(neo, reflectionIndex))).modulate(kr);
-		}
-		
-		/** add the refraction term **/
+		Color reflectionCol = new Color(0, 0, 0);
 
-		if(hit.getType().getMaterial().isRefactorable()){
+		if (reflectionIndex > 0 && neo != null && neo.getDistance() > 0.00001f) {
+			reflectionIndex--;
+			reflectionCol = (this.shade(neo, reflectionIndex)).modulate(kr);
+		}
+
+		/** add the transmitting term **/
+
+		Color transmissionCol = new Color(0, 0, 0);
+
+//		if (hit.getType().getMaterial().getkRef() != Materials.solid) {
 			
-			float n1 = 1.000f;
-			float n2 = 1.333f;
+			Hit lastHit = null;
 			
-			float cos = hit.getRay().getNormalizedDirection().dot(hit.getN().normalize());
-			float cos2 = (float) Math.pow(cos, 2);
-			
-			float nCheck = (float) ((float) Math.pow((n1 / n2), 2) * ( 1 - cos2));
-			
-			if(nCheck <= 1){
+			/** needed floats **/
+			float cos = hit.getRay().getNormalizedDirection().dot(hit.getN());
+			float n1;
+			float n2;
+
+			/** needed vectors **/
+			Vector nTransmit = hit.getN();
+			Vector i = hit.getRay().getNormalizedDirection();
+
+			/** check the normal-vector **/
+			if (cos > 0) {
+				n1 = Scene.getInstance().getkRef();
+				n2 = hit.getType().getMaterial().getkRef();
+			} else {
+				nTransmit = nTransmit.mult(-1);
+				n2 = Scene.getInstance().getkRef();
+				n1 = hit.getType().getMaterial().getkRef();
+			}
+
+			/** some computed values **/
+			float nDiv = n1 / n2;
+			float nDivPow2 = (float) Math.pow(nDiv, 2);
+			float cosPow2 = (float) Math.pow(cos, 2);
+
+			float checkTransmit = (nDivPow2 * (1 - cosPow2));
+
+			if (checkTransmit <= 1) {
+
+				float nDivCos = nDiv * cosPow2;
 				
-				float r0 = (float) Math.pow((( n1 - n2) / ( n1 + n2 )) , 2);
-				float r = (float) (r0 + ( 1 - r0 )*(Math.pow((1 - cos2), 5)));
-				float t = 1 - r;
-				
-				float nDiv = n1 / n2;
-				
-				Vector i = hit.getRay().getNormalizedDirection();
-				Vector nRef = hit.getN();
-				
-				Vector tRef = i.mult(nDiv).add( nRef.mult((float) (Math.pow(nDiv, 2) * cos2 ) ));
-				
-				Scene.getInstance().intersect(new Ray(hit.getHitpoint(), tRef.mult(-1)));
+				Vector t1 = i.mult(nDiv);
+				//Vector t2 = nTransmit.mult((float) Math.sqrt(1 - nDivCos));
+				Vector t2 = nTransmit.mult((float) (nDiv*cos - Math.sqrt(1 - nDivCos)));
+				Vector tDirection = t1.add(t2).normalize();
+
+				Hit hTransmit = Scene.getInstance().intersect(
+						new Ray(hit.getHitpoint(), tDirection.mult(-1)));
+
+				if (reflectionIndex > 0 && hTransmit != null  ) {
+					transmissionCol = (this.shade(hTransmit, reflectionIndex - 1));
+					lastHit = hTransmit;
+				}
 			}
 			
+			if( lastHit != null ) {
+			/** specific factors **/
+			float r0 = (float) Math.pow(((n1 - n2) / (n1 + n2)), 2);
+			float R = (float) (r0 + (1 - r0) * (Math.pow((1 - cosPow2), 5)));
+			float T = 1 - R;
 			
-		}
-		
+			/** prepare reflection and transmission color **/
+				reflectionCol = reflectionCol.modulate(R);
+				transmissionCol = transmissionCol.modulate(T);
+			}
+//		}
+
 		/** return the final color **/
+		//add = add.add(reflectionCol);
+		add = add.add(transmissionCol);
 		return add;
 
 	}
-
 }

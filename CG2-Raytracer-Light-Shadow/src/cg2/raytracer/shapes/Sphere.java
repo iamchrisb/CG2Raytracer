@@ -1,8 +1,11 @@
 package cg2.raytracer.shapes;
 
+import cg2.interfaces.Materializable;
+import cg2.interfaces.Raytracable;
+import cg2.interfaces.Shape;
+import cg2.material.Material;
 import cg2.raytracer.Hit;
 import cg2.raytracer.Ray;
-import cg2.raytracer.Raytracable;
 import cg2.vecmath.Color;
 import cg2.vecmath.Vector;
 
@@ -16,8 +19,8 @@ public class Sphere implements Shape, Raytracable, Materializable {
 	private Vector n;
 	private Vector hitpoint;
 
-	public Sphere(final Vector c, final float r, final Material blueMaterial) {
-		this.m = blueMaterial;
+	public Sphere(final Vector c, final float r, final Material mat) {
+		this.m = mat;
 		radius = r;
 		this.c = c;
 	}
@@ -54,7 +57,6 @@ public class Sphere implements Shape, Raytracable, Materializable {
 			hitpoint = r.getPoint(getMinHit(test, v));
 			n = c.sub(hitpoint);
 			if (getMinHit(test, v) < 0) {
-//				System.out.println("return NULL NULL NULL");
 				return null;
 			} else {
 				return new Hit(this.getColor(), getMinHit(test, v), this,

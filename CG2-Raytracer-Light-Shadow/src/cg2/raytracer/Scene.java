@@ -2,16 +2,27 @@ package cg2.raytracer;
 
 import java.util.ArrayList;
 
-import cg2.lightsources.Light;
-import cg2.raytracer.shapes.Shape;
+import cg2.interfaces.Raytracable;
+import cg2.interfaces.Shape;
+import cg2.lightsources.PointLight;
+import cg2.material.Materials;
 import cg2.vecmath.Color;
 
 public class Scene implements Raytracable{
 
 	private ArrayList<Shape> shapes;
-	private ArrayList<Light> lights;
+	private ArrayList<PointLight> lights;
 	private Color c;
+	private float kRef;
 	
+	public float getkRef() {
+		return kRef;
+	}
+
+	public void setkRef(float kRef) {
+		this.kRef = kRef;
+	}
+
 	public static Scene instance = null;
 	
 	public static Scene getInstance(){
@@ -24,7 +35,8 @@ public class Scene implements Raytracable{
 	private Scene() {
 		c = new Color(1, 1, 1);
 		shapes = new ArrayList<Shape>();
-		lights = new ArrayList<Light>();
+		lights = new ArrayList<PointLight>();
+		setkRef(Materials.air);
 	}
 
 	public Shape[] getShapes() {
@@ -35,11 +47,11 @@ public class Scene implements Raytracable{
 		shapes.add(s);
 	}
 	
-	public void addLightSource(final Light dl){
+	public void addLightSource(final PointLight dl){
 		lights.add(dl);
 	}
 	
-	public ArrayList<Light> getLights(){
+	public ArrayList<PointLight> getLights(){
 		return lights;
 	}
 

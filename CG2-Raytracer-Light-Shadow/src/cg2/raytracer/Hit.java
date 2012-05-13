@@ -1,6 +1,6 @@
 package cg2.raytracer;
 
-import cg2.raytracer.shapes.Shape;
+import cg2.interfaces.Shape;
 import cg2.vecmath.Color;
 import cg2.vecmath.Vector;
 
@@ -37,7 +37,7 @@ public class Hit {
 	public Color shade() {
 		
 		Shader s = new Shader();
-		int rekIndex = 10;
+		int rekIndex = 2;
 		return s.shade(this , rekIndex);
 
 	}
@@ -73,10 +73,11 @@ public class Hit {
 	public void setRay(Ray ray) {
 		this.ray = ray;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Hit " + type.getType() + ": distance=" + distance + "]";
+		return "Hit [c=" + c + ", distance=" + distance + ", type=" + type
+				+ ", n=" + n + ", koords=" + koords + ", ray=" + ray + "]";
 	}
 
 	public float getDistance() {
