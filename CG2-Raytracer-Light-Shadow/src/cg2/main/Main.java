@@ -1,5 +1,6 @@
 package cg2.main;
 
+import cg2.lightsources.AreaLight;
 import cg2.lightsources.PointLight;
 import cg2.material.Materials;
 import cg2.raytracer.Camera;
@@ -23,11 +24,7 @@ public class Main {
 		String path = System.getProperty("user.home");
 		
 		int resolutionX = 1366;
-//		resolutionX = 1920;
-//		resolutionX = 480;
 		int resolutionY = 768;
-//		resolutionY = 1080;
-//		resolutionY = 380;
 		
 		int angle = 120;
 		
@@ -35,43 +32,53 @@ public class Main {
 		c.setAngle(angle);
 		
 		Scene s = Scene.getInstance();
-		
-//		Plane backPlane = new Plane(new Vector(0f, 0f, -3.5f), new Vector(0f, 0f, 1f), Materials.white_grey);
-//		Plane groundPlane = new Plane(new Vector(0f, -.3f, 0f), new Vector(0f, 1f, 0f), Materials.darkgrey );
-		
-		Plane groundPlane = new Plane(new Vector(0f, -1f, 0f), new Vector(0f, 1f, 0f), Materials.white_grey );
+
+		/** SOME SHAPES **/
+//		Plane backPlane = new Plane(new Vector(0f, 0f,-2.35f), new Vector(0f, 0f, 1f), Materials.testRef);
+		Plane groundPlane = new Plane(new Vector(0f, -1f, 0f), new Vector(0f, -1f, 0f), Materials.white_grey );
+//		Plane groundPlane = new Plane(new Vector(0f, -0.9f, 0f), new Vector(0f, -1f, 0f), Materials.yellow );
 //		Plane rightPlane = new Plane(new Vector(1f, 0f, 0f), new Vector(-1f, 0f, 0.25f), Materials.yellow);
-		
 		
 //		s.addShape(backPlane);
 		s.addShape(groundPlane);
 //		s.addShape(rightPlane);
 		
-		Sphere k2 = new Sphere(new Vector(-0.3f, -0.88f, -2.0f) , 0.006f , Materials.darkgrey);
+		Sphere k2 = new Sphere(new Vector(-0.3f, -0.88f, -2.0f) , 0.006f , Materials.green);
 		Sphere k3 = new Sphere(new Vector(.1f , -.89f, -2.5f) , 0.005f , Materials.green );
 		Sphere k3b = new Sphere(new Vector(-0.1f , -.89f, -2.3f) , 0.005f , Materials.blue );
-		
-		Sphere kRef = new Sphere(new Vector(-0.35f , -.89f, -1.5f) , 0.005f , Materials.testRef );
-		
-		
+		Sphere kRef = new Sphere(new Vector(-0.30f , -.89f, -1.5f) , 0.005f , Materials.testTransmit );
+
 		s.addShape(k2);
 		s.addShape(k3);
 		s.addShape(k3b);
 		s.addShape(kRef);
 		
+//		Sphere k2o = new Sphere(new Vector(-0.3f, .0f, -2.0f) , 0.005f , Materials.white);
+//		Sphere k3o = new Sphere(new Vector(.1f , .0f, -2.5f) , 0.005f , Materials.white );
+//		Sphere k3bo = new Sphere(new Vector(-0.1f , .0f, -1.5f) , 0.005f , Materials.white );
+		
+//		s.addShape(k2o);
+//		s.addShape(k3o);
+//		s.addShape(k3bo);
+		
 		ParallelQuader q1 = new ParallelQuader(new Vector(0.3f, -0.96f, -3.5f), new Vector(0.5f, -0.7f, -1.4f), Materials.darkgrey);
 		s.addShape(q1);
 		
-		Color lc = new Color(0.2f,0.2f,0.35f);
+		/** AREA LIGHT **/ 		
+		AreaLight al2 = new AreaLight(new Color(0.4f,0.4f,0.4f), new Vector(-2f , 3f, -1.5f), 6, 6 , 0.1f);
+//		s.addLightSource(al2);
+		
+		/** SOME POINT LIGHTS **/
+		Color lc = new Color(0.3f,0.3f,0.5f);
 		
 		PointLight dlx = new PointLight();
 		dlx.setColor(lc);
-		dlx.setPosition(new Vector(-2f, 3f, -1.5f));
-//		s.addLightSource(dlx);
+		dlx.setPosition(new Vector(0f, 0f, 0.f));
+		s.addLightSource(dlx);
 		
 		PointLight dlxa = new PointLight();
 		dlxa.setColor(lc);
-		dlxa.setPosition(new Vector(2f, 3f, -1.5f));
+		dlxa.setPosition(new Vector(12f, 3f, -1.5f));
 //		s.addLightSource(dlxa);
 		
 		PointLight dl = new PointLight();

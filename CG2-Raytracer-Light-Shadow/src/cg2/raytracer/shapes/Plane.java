@@ -1,15 +1,15 @@
 package cg2.raytracer.shapes;
 
 import cg2.interfaces.Materializable;
-import cg2.interfaces.Raytracable;
 import cg2.interfaces.Shape;
+import cg2.material.Constants;
 import cg2.material.Material;
 import cg2.raytracer.Hit;
 import cg2.raytracer.Ray;
 import cg2.vecmath.Color;
 import cg2.vecmath.Vector;
 
-public class Plane implements Shape, Raytracable, Materializable {
+public class Plane implements Shape, Materializable {
 
 	private Vector n;
 	private Vector pos;
@@ -27,7 +27,7 @@ public class Plane implements Shape, Raytracable, Materializable {
 	 * @param greyMaterial
 	 */
 	public Plane(final Vector pos, final Vector n, final Material greyMaterial) {
-		this.n = n;
+		this.n = n.normalize();
 		this.pos = pos;
 		this.m = greyMaterial;
 	}
@@ -46,7 +46,7 @@ public class Plane implements Shape, Raytracable, Materializable {
 		float t = (d - n.dot(r.getOrigin())) / dot;
 
 		// if the plane is behind the cam return null, else..
-		if (t > 0.00001) {
+		if (t > Constants.epsilon) {
 			return new Hit(c, t, this, r.getPoint(t), this.n.mult(1), r);
 		} else {
 			return null;

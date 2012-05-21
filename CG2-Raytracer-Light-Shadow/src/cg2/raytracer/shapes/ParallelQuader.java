@@ -3,15 +3,15 @@ package cg2.raytracer.shapes;
 import java.util.ArrayList;
 
 import cg2.interfaces.Materializable;
-import cg2.interfaces.Raytracable;
 import cg2.interfaces.Shape;
+import cg2.material.Constants;
 import cg2.material.Material;
 import cg2.raytracer.Hit;
 import cg2.raytracer.Ray;
 import cg2.vecmath.Color;
 import cg2.vecmath.Vector;
 
-public class ParallelQuader implements Shape, Raytracable, Materializable {
+public class ParallelQuader implements Shape, Materializable {
 
 	private Vector p;
 	private Vector q;
@@ -101,10 +101,9 @@ public class ParallelQuader implements Shape, Raytracable, Materializable {
 	 */
 	private boolean isHitBtwPAndQ(Hit biggest, Ray r) {
 		Vector in = r.getPoint(biggest.getDistance());
-		float a = 0.000001f;
 
-		if (in.x >= p.x - a && in.y >= p.y - a && in.z >= p.z - a) {
-			if (in.x <= q.x + a && in.y <= q.y + a && in.z <= q.z + a) {
+		if (in.x >= p.x - Constants.epsilon && in.y >= p.y - Constants.epsilon && in.z >= p.z - Constants.epsilon) {
+			if (in.x <= q.x + Constants.epsilon && in.y <= q.y + Constants.epsilon && in.z <= q.z + Constants.epsilon) {
 				return true;
 			}
 		}

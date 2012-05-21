@@ -1,15 +1,15 @@
 package cg2.raytracer.shapes;
 
 import cg2.interfaces.Materializable;
-import cg2.interfaces.Raytracable;
 import cg2.interfaces.Shape;
+import cg2.material.Constants;
 import cg2.material.Material;
 import cg2.raytracer.Hit;
 import cg2.raytracer.Ray;
 import cg2.vecmath.Color;
 import cg2.vecmath.Vector;
 
-public class Sphere implements Shape, Raytracable, Materializable {
+public class Sphere implements Shape, Materializable {
 
 	private float radius;
 	final private Vector c;
@@ -68,15 +68,14 @@ public class Sphere implements Shape, Raytracable, Materializable {
 	}
 
 	private float getMinHit(float test, Vector v) {
-		float epsilon = 0.001f;
 		float d1 = -(x0.dot(v)) - test;
 		float d2 = -(x0.dot(v)) + test;
 		float min = Math.min(d1, d2);
-		if (d1 > epsilon && d2 > epsilon) {
+		if (d1 > Constants.epsilon && d2 > Constants.epsilon) {
 			return min;
-		} else if(d1 < epsilon && d2 < epsilon ){
+		} else if(d1 < Constants.epsilon && d2 < Constants.epsilon ){
 			return -23423423;
-		} else if(d1 < epsilon && d2 > epsilon){
+		} else if(d1 < Constants.epsilon && d2 > Constants.epsilon){
 			return d2;
 		}else{
 			return d1;

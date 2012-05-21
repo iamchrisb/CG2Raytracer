@@ -1,30 +1,34 @@
-package cg2.depricated;
+package cg2.lightsources;
 
-import cg2.depricated.LightSource;
 import cg2.vecmath.Color;
 import cg2.vecmath.Vector;
 
-public class DiffuseLight implements LightSource{
+public class PointLight implements LightSource {
 	
 	private Vector position;
 	private Color c;
+	
 
-	@Override
+	public PointLight(Vector position, Color c) {
+		this.position = position;
+		this.c = c;
+	}
+
+	public PointLight() {
+	}
+
 	public Vector getPosition() {
 		return position;
 	}
 
-	@Override
 	public void setPosition(Vector v) {
 		this.position = v;
 	}
 
-	@Override
 	public Color getColor() {
 		return c;
 	}
 
-	@Override
 	public void setColor(Color c) {
 		this.c =c;
 	}

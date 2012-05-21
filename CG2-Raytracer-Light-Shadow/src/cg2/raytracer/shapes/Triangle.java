@@ -1,6 +1,5 @@
 package cg2.raytracer.shapes;
 
-import cg2.interfaces.Raytracable;
 import cg2.interfaces.Shape;
 import cg2.material.Material;
 import cg2.raytracer.Hit;
@@ -8,7 +7,7 @@ import cg2.raytracer.Ray;
 import cg2.vecmath.Color;
 import cg2.vecmath.Vector;
 
-public class Triangle implements Shape, Raytracable{
+public class Triangle implements Shape{
 	
 //	private Vector a;
 	private Vector b;
