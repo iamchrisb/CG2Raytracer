@@ -38,31 +38,9 @@ public class Hit {
 	}
 
 	public Color shade() {
-		
 		Shader s = new Shader();
 		int rekIndex = 2;
-		
-//		/** add the fog term **/
-//		
-//		Color fogColor = new Color(0,0,0);
-////		Vector ur = new Vector(0, 2, 1);
-//		Vector ur = new Vector(0.0f, -0.40f, 2);
-//
-//		Ray rf = new Ray(this.getHitpoint(), this.getHitpoint().sub(
-//				ur).normalize());
-//		PlaneFog pf = new PlaneFog(new Plane(new Vector(0f, -0.9f, 0f), new Vector(0f, -1f, 0f), Materials.yellow ), 3.0f,
-//				new Color(0, 0, 0.7f));
-//		Hit neoH = pf.intersect(rf);
-//
-//		if (neoH != null) {
-////			System.out.println("not nientaaa");
-//			if (neoH.getDistance() < this.getHitpoint().sub(ur).length()) {
-//				fogColor = fogColor.add(pf.getFogColor());
-//			}
-//		}
-//		wholeLight = wholeLight.add(fogColor);
-		
-		return s.shade(this , rekIndex);//.add(fogColor);
+		return s.shade(this , rekIndex);
 
 	}
 
