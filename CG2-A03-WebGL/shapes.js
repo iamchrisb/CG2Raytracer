@@ -159,6 +159,37 @@ TriangleStrip = function(gl) {
     }
 } 
 
-Sphere = function(){
+Sphere = function(gl, n, m, radius){
+	
+	this.radius = radius;
+	
+	var vecNr = n*m*6*3;
+	
+	var x = function(u,v){
+		return this.radius * Math.sin(u) * Math.cos(v);
+	}
+	
+	var y = function(u,y){
+		return this.radius * Math.sin(u) * Math.sin(v);
+	}
+	
+	var z = function(u,v){
+		return this.radius * Math.cos(u);
+	}
+	
+	var index0 = 0;
+	// var index1 = 0;
+	
+	var vposition = new Float32Array(vecNr);
+	var vcolor = new Float32Array(vecNr);
+	
+	for(var i = 1 ; i <= n ; i++ ){
+		for(var j = 1 ; j <= m ; j++ ){
+			var ui1 = Math.PI*2;
+			var ui0 = Math.PI*2;
+			var vj1 = Math.PI;
+			var vj0 = Math.PI;
+		}
+	}
 	
 }
