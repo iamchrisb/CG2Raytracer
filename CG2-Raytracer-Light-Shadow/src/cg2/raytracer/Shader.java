@@ -51,7 +51,7 @@ public class Shader {
 
 					if (newH != null) {
 						if (distanceA < newH.getDistance()
-								|| newH.getDistance() < Constants.epsilon) {
+								|| newH.getDistance() < Constants.EPSILON) {
 							viewability = 1;
 						} else {
 							viewability = 0;
@@ -96,7 +96,7 @@ public class Shader {
 
 				if (newH != null) {
 					if (distanceA < newH.getDistance()
-							|| newH.getDistance() < Constants.epsilon) {
+							|| newH.getDistance() < Constants.EPSILON) {
 						viewability = 1;
 					} else {
 						viewability = 0;
@@ -118,7 +118,7 @@ public class Shader {
 
 					if (sn > 0) {
 						diffuse_point_out = diffuse_point_out.add(plight
-								.getColor().modulate(sn));//.modulate(getDistance(distanceA));
+								.getColor().modulate(sn)).modulate(getDistance(distanceA));
 					}
 
 					/** get and add the specular term **/
@@ -143,7 +143,6 @@ public class Shader {
 					}
 				}
 			}
-
 		}
 
 		/** bring all light-terms together **/
@@ -195,18 +194,16 @@ public class Shader {
 
 		float checkTransmit = (nDivPow2 * (1 - cosPow2));
 
-//		System.out.println(sin2ot);
 		if (checkTransmit <= 1) {
 			R = 1;
 			T = 0;
 		}
 		
-		T = 1;
-//		R = 0;
+		T = 0;
+		R = 0;
 
 		/** compute the transmitting term **/
-		if (T > Constants.epsilon) {
-//			System.out.println("now");
+		if (T > Constants.EPSILON) {
 			float nDivCos = nDiv * cosPow2;
 
 			Vector t1 = i.mult(nDiv);
@@ -223,8 +220,8 @@ public class Shader {
 			}
 		}
 
-		if (R > Constants.epsilon) {
-			/** compute the reflection term **/
+		/** compute the reflection term **/
+		if (R > Constants.EPSILON) {
 			Vector v = h.getRay().getNormalizedDirection().mult(-1f);
 			Vector n = h.getN().normalize();
 
@@ -233,14 +230,14 @@ public class Shader {
 			neo = Scene.getInstance().intersect(new Ray(h.getHitpoint(), rv));
 
 			if (reflectionIndex > 0 && neo != null
-					&& neo.getDistance() > Constants.epsilon) {
+					&& neo.getDistance() > Constants.EPSILON) {
 				reflectionIndex--;
 				reflectionCol = (this.shade(neo, reflectionIndex)).modulate(kr);
 			}
 		}
 		
-	//	T = 1;
-		//R = 0;
+//		T = 1;
+//		R = 0;
 
 		/** prepare reflection and transmission color **/
 		reflectionCol = reflectionCol.modulate(R);
@@ -262,6 +259,48 @@ public class Shader {
 		return Math.min(lower, 1);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
 /** add the fog term 

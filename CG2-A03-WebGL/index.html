@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebGL Example / Tutorial</title>
+    
+    <!-- some utility libraries -->
+    <script type="text/javascript" src="gl-matrix.js"></script>
+    <script type="text/javascript" src="util.js"></script>
+    <script type="text/javascript" src="program.js"></script>
+    <script type="text/javascript" src="buffer.js"></script>
+    <script type="text/javascript" src="camera.js"></script>
+    <script type="text/javascript" src="scene.js"></script>
+    <script type="text/javascript" src="explorer.js"></script>
+    <script type="text/javascript" src="shapes.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    
+    <!-- vertex shader source code -->
+    <script id="vert_shader" type="x-shader/x-vertex">
+    
+        // transformations: model-view and projection
+        uniform mat4 modelViewMatrix;
+        uniform mat4 projectionMatrix;
+        
+        // vertex attribute: position and color
+        attribute vec3 vertexPosition; 
+        attribute vec3 vertexColor;
+        
+        // transfer per-vertex color to fragment shader
+        varying vec4 fragColor;
+        
+        // main
+        void main() { 
+        
+            // step 1: transform vertex positions
+            gl_Position = projectionMatrix *  modelViewMatrix * vec4(vertexPosition,1.0);
+            
+            // step 2: copy color to varying variable for fragment shader
+            fragColor = vec4(vertexColor,1.0);
+        }
+        
+    </script>
+
+    <!-- fragment shader source code -->
+    <script id="frag_shader" type="x-shader/x-fragment">
+        // specify the floating point precision (required in WebGL)
+        precision highp float;
+        
+        // get output of vertex shader
+        varying vec4 fragColor; 
+        
+        // main
+        void main() { 
+        
+            // simply use the color provided by the vertex shader
+            gl_FragColor = fragColor;
+        }    
+    </script>
+    
+</head>
+
+<body style="bgcolor:white; font-family:helvetica;">
+
+    <!-- table to lay out canvas and form side by side -->
+    <table>
+    <tr><td>
+    
+    <!-- the canvas in which to draw using WebGL -->
+    <canvas id="webgl_canvas" width="300" height="300"></canvas>
+    
+    <!-- next row in layout table -->
+    </td><td>
+    
+        <!-- an HTML form to define the camera/projection parameters -->
+    <form name="cameraParameters" action="" method="post">
+      <table border="0">
+        <tr>
+          <td>
+            <input name="projection_type" type="radio" value="perspective" checked 
+                    onclick="updateCamera(theScene)" >
+          </td><td>
+            Perspektivische Projektion
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            &Ouml;ffnungswinkel: <input name="fovy" type="text" size="3" maxlength="3" value="60" 
+                                        onchange="updateCamera(theScene)"> Grad<br>
+            Tiefenbereich (Z) von: <input name="znear" type="text" size="10" maxlength="10" 
+                                        value="0.0001" onchange="updateCamera(theScene)">
+            bis <input name="zfar" type="text" size="10" maxlength="10" value="1000" 
+                        onchange="updateCamera(theScene)">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input name="projection_type" type="radio" value="orthographic" 
+                    onclick="updateCamera(theScene)">
+          </td><td>
+            Orthographische Projektion
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <table border="0">
+                <tr>
+                    <td>links:</td>  
+                    <td><input name="left" type="text" size="10" maxlength="10" value="-3" 
+                                        onchange="updateCamera(theScene)"></td>
+                    <td>rechts:</td>  
+                    <td><input name="right" type="text" size="10" maxlength="10" value="3" 
+                                        onchange="updateCamera(theScene)"></td>
+                </tr>
+                <tr>
+                    <td>unten:</td>  
+                    <td><input name="bot" type="text" size="10" maxlength="10" value="-3" 
+                                        onchange="updateCamera(theScene)"></td>
+                    <td>oben:</td>  
+                    <td><input name="top" type="text" size="10" maxlength="10" value="3" 
+                                        onchange="updateCamera(theScene)"></td>
+                </tr>
+                <tr>
+                    <td>vorne:</td>  
+                    <td><input name="front" type="text" size="10" maxlength="10" value="0.0001" 
+                                        onchange="updateCamera(theScene)"></td>
+                    <td>hinten:</td>  
+                    <td><input name="back" type="text" size="10" maxlength="10" value="1000" 
+                                        onchange="updateCamera(theScene)"></td>
+                </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </form>
+    
+    <!-- end of layout table -->
+    </td>
+    </tr>
+    </table>
+    
+    <!-- explanation of mouse keys -->
+    <table>
+      <tr>
+        <td>Rotation: </td><td>Linke Maustaste</td>
+      </tr><tr>
+        <td>Translation: </td><td>Rechte Maustaste, oder Shift-Links</td>
+      </tr><tr>
+        <td>Zoom: </td><td>Mittlere Maustase, Scrollrad, oder Alt-Links</td>
+      </tr>
+    </table>
+    <p>
+
+      
+</body>
+
+</html>

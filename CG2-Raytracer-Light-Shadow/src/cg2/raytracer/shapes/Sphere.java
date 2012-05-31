@@ -71,11 +71,11 @@ public class Sphere implements Shape, Materializable {
 		float d1 = -(x0.dot(v)) - test;
 		float d2 = -(x0.dot(v)) + test;
 		float min = Math.min(d1, d2);
-		if (d1 > Constants.epsilon && d2 > Constants.epsilon) {
+		if (d1 > Constants.EPSILON && d2 > Constants.EPSILON) {
 			return min;
-		} else if(d1 < Constants.epsilon && d2 < Constants.epsilon ){
+		} else if(d1 < Constants.EPSILON && d2 < Constants.EPSILON ){
 			return -23423423;
-		} else if(d1 < Constants.epsilon && d2 > Constants.epsilon){
+		} else if(d1 < Constants.EPSILON && d2 > Constants.EPSILON){
 			return d2;
 		}else{
 			return d1;

@@ -34,10 +34,11 @@ public class Main {
 		Scene s = Scene.getInstance();
 
 		/** SOME SHAPES **/
+//		Plane backPlane = new Plane(new Vector(0f, 0f,-8.35f), new Vector(0f, 0f, 1f), Materials.darkgrey2);
 //		Plane backPlane = new Plane(new Vector(0f, 0f,-2.35f), new Vector(0f, 0f, 1f), Materials.testRef);
 		Plane groundPlane = new Plane(new Vector(0f, -1f, 0f), new Vector(0f, -1f, 0f), Materials.white_grey );
 //		Plane groundPlane = new Plane(new Vector(0f, -0.9f, 0f), new Vector(0f, -1f, 0f), Materials.yellow );
-//		Plane rightPlane = new Plane(new Vector(1f, 0f, 0f), new Vector(-1f, 0f, 0.25f), Materials.yellow);
+		Plane rightPlane = new Plane(new Vector(1f, 0f, 0f), new Vector(-1f, 0f, 0.25f), Materials.yellow);
 		
 //		s.addShape(backPlane);
 		s.addShape(groundPlane);
@@ -53,28 +54,28 @@ public class Main {
 		s.addShape(k3b);
 		s.addShape(kRef);
 		
-//		Sphere k2o = new Sphere(new Vector(-0.3f, .0f, -2.0f) , 0.005f , Materials.white);
-//		Sphere k3o = new Sphere(new Vector(.1f , .0f, -2.5f) , 0.005f , Materials.white );
-//		Sphere k3bo = new Sphere(new Vector(-0.1f , .0f, -1.5f) , 0.005f , Materials.white );
+		Sphere k2o = new Sphere(new Vector(-0.3f, .0f, -2.0f) , 0.005f , Materials.white);
+		Sphere k3o = new Sphere(new Vector(.1f , .0f, -2.5f) , 0.005f , Materials.white );
+		Sphere k3bo = new Sphere(new Vector(-0.1f , .0f, -1.5f) , 0.005f , Materials.white );
 		
-//		s.addShape(k2o);
-//		s.addShape(k3o);
-//		s.addShape(k3bo);
+		s.addShape(k2o);
+		s.addShape(k3o);
+		s.addShape(k3bo);
 		
 		ParallelQuader q1 = new ParallelQuader(new Vector(0.3f, -0.96f, -3.5f), new Vector(0.5f, -0.7f, -1.4f), Materials.darkgrey);
 		s.addShape(q1);
 		
 		/** AREA LIGHT **/ 		
 		AreaLight al2 = new AreaLight(new Color(0.4f,0.4f,0.4f), new Vector(-0f , 3f, -1.5f), 6, 6 , 0.1f);
-		s.addLightSource(al2);
+//		s.addLightSource(al2);
 		
 		/** SOME POINT LIGHTS **/
-		Color lc = new Color(0.3f,0.3f,0.5f);
+		Color lc = new Color(0.7f,0.7f,0.7f);
 		
 		PointLight dlx = new PointLight();
 		dlx.setColor(lc);
 		dlx.setPosition(new Vector(0f, 0f, 0.f));
-//		s.addLightSource(dlx);
+		s.addLightSource(dlx);
 		
 		PointLight dlxa = new PointLight();
 		dlxa.setColor(lc);

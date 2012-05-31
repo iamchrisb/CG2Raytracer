@@ -2,8 +2,6 @@ package cg2.lightsources;
 
 import java.util.ArrayList;
 
-import org.omg.CORBA.FREE_MEM;
-
 import cg2.vecmath.Color;
 import cg2.vecmath.Vector;
 

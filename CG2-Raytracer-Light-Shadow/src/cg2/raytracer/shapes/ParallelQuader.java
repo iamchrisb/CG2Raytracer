@@ -102,8 +102,8 @@ public class ParallelQuader implements Shape, Materializable {
 	private boolean isHitBtwPAndQ(Hit biggest, Ray r) {
 		Vector in = r.getPoint(biggest.getDistance());
 
-		if (in.x >= p.x - Constants.epsilon && in.y >= p.y - Constants.epsilon && in.z >= p.z - Constants.epsilon) {
-			if (in.x <= q.x + Constants.epsilon && in.y <= q.y + Constants.epsilon && in.z <= q.z + Constants.epsilon) {
+		if (in.x >= p.x - Constants.EPSILON && in.y >= p.y - Constants.EPSILON && in.z >= p.z - Constants.EPSILON) {
+			if (in.x <= q.x + Constants.EPSILON && in.y <= q.y + Constants.EPSILON && in.z <= q.z + Constants.EPSILON) {
 				return true;
 			}
 		}

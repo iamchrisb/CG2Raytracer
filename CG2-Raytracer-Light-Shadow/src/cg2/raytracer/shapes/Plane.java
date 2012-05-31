@@ -46,7 +46,7 @@ public class Plane implements Shape, Materializable {
 		float t = (d - n.dot(r.getOrigin())) / dot;
 
 		// if the plane is behind the cam return null, else..
-		if (t > Constants.epsilon) {
+		if (t > Constants.EPSILON) {
 			return new Hit(c, t, this, r.getPoint(t), this.n.mult(1), r);
 		} else {
 			return null;
