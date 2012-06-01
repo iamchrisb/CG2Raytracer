@@ -27,7 +27,7 @@ window.onload = function () {
     // add an object to the scene
     // theScene.addShape(new TriangleFan(gl));
     // theScene.addShape(new Cube(gl , 2));
-    theScene.addShape(new Sphere(gl , 100 , 100 , 2 ));
+    theScene.addShape(new Sphere(gl , 50 , 50 , 2 ));
     // theScene.addShape(new TriangleStrip(gl));
     
     // set the camera's viewpoint and viewing direction

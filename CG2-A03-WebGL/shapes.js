@@ -165,7 +165,7 @@ Sphere = function(gl, n, m, radius){
 	
 	this.radius = radius;
 
-	var vecNr = n*m*3;
+	var vecNr = n*m*3*3;
 	
 	x = function(u,v){
 		// console.log("x: " + radius * Math.sin(u) * Math.cos(v));
@@ -199,18 +199,31 @@ Sphere = function(gl, n, m, radius){
 			
 			// console.log("u1 : " + u1 + ", u0: " + u0 + ", v1: " + v1 + ", v0: " + v0);
 			
-			vposition[index0++] = x(u1 , v1);
-			vposition[index0++] = y(u1 , v1);
-			vposition[index0++] = z(u1 , v1);
-			
 			vposition[index0++] = x(u0 , v1);
 			vposition[index0++] = y(u0 , v1);
 			vposition[index0++] = z(u0 , v1);
+			
+			vposition[index0++] = x(u1 , v1);
+			vposition[index0++] = y(u1 , v1);
+			vposition[index0++] = z(u1 , v1);
 			
 			vposition[index0++] = x(u0 , v0);
 			vposition[index0++] = y(u0 , v0);
 			vposition[index0++] = z(u0 , v0);
 			
+			vposition[index0++] = x(u1 , v1);
+			vposition[index0++] = y(u1 , v1);
+			vposition[index0++] = z(u1 , v1);
+			
+			vposition[index0++] = x(u0 , v0);
+			vposition[index0++] = y(u0 , v0);
+			vposition[index0++] = z(u0 , v0);
+			
+			vposition[index0++] = x(u1 , v0);
+			vposition[index0++] = y(u1 , v0);
+			vposition[index0++] = z(u1 , v0);
+			
+			if(i*j % 2 == 0){
 			vcolor[index1++] = 1;
 			vcolor[index1++] = 1;
 			vcolor[index1++] = 1;
@@ -222,11 +235,49 @@ Sphere = function(gl, n, m, radius){
 			vcolor[index1++] = 1;
 			vcolor[index1++] = 1;
 			vcolor[index1++] = 1;
+			
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			}else{
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			vcolor[index1++] = 0.6;
+			}
+			
 		}
 	}
 	// console.log(count + ", vecanz: " + vecNr + ", length: " + vposition.length);
 	for (var o=0; o < vposition.length; o++) {
-	  console.log(o + ": " + vposition[o]);
+	  // console.log(o + ": " + vposition[o]);
 	}
 	
 	this.posBuffer = new VertexAttributeBuffer(gl, "vertexPosition", gl.FLOAT, 3, vposition);
