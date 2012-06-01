@@ -83,28 +83,28 @@ TriangleFan = function(gl, material) {
     }
 }    
 
-Cube = function(gl){
+Cube = function(gl , l){
 	var vposition = new Float32Array([ 
 									   //near and far planes
-									   1,-1,1, -1,-1,1, 1,1,1, 
-									   -1,-1,1, 1,1,1, -1,1,1,
+									   l/2,-l/2,l/2, -l/2,-l/2,l/2, l/2,l/2,l/2, 
+									   -l/2,-l/2,l/2, l/2,l/2,l/2, -l/2,l/2,l/2,
 									    
-									   1,-1,-1, -1,-1,-1, 1,1,-1, 
-									   -1,-1,-1, 1,1,-1, -1,1,-1,
+									   l/2,-l/2,-l/2, -l/2,-l/2,-l/2, l/2,l/2,-l/2, 
+									   -l/2,-l/2,-l/2, l/2,l/2,-l/2, -l/2,l/2,-l/2,
 									   
 									   //left and right planes
-									   -1,-1,1, -1,-1,-1, -1,1,1,
-									   -1,1,1, -1,-1,-1, -1,1,-1,
+									   -l/2,-l/2,l/2, -l/2,-l/2,-l/2, -l/2,l/2,l/2,
+									   -l/2,l/2,l/2, -l/2,-l/2,-l/2, -l/2,l/2,-l/2,
 									   
-									   1,-1,1, 1,-1,-1, 1,1,1,
-									   1,1,1, 1,-1,-1, 1,1,-1,
+									   l/2,-l/2,l/2, l/2,-l/2,-l/2, l/2,l/2,l/2,
+									   l/2,l/2,l/2, l/2,-l/2,-l/2, l/2,l/2,-l/2,
 									   
 									   //top and bottom planes
-									   -1,-1,1, 1,-1,1, -1,-1,-1,
-									   1,-1,1, -1,-1,-1, 1,-1,-1,
+									   -l/2,-l/2,l/2, l/2,-l/2,l/2, -l/2,-l/2,-l/2,
+									   l/2,-l/2,l/2, -l/2,-l/2,-l/2, l/2,-l/2,-l/2,
 									   
-									   -1,1,1, 1,1,1, -1,1,-1,
-									   1,1,1, -1,1,-1, 1,1,-1
+									   -l/2,l/2,l/2, l/2,l/2,l/2, -l/2,l/2,-l/2,
+									   l/2,l/2,l/2, -l/2,l/2,-l/2, l/2,l/2,-l/2
 									   ]);
 	this.posBuffer = new VertexAttributeBuffer(gl, "vertexPosition", gl.FLOAT, 3, vposition);
 	
@@ -161,35 +161,82 @@ TriangleStrip = function(gl) {
 
 Sphere = function(gl, n, m, radius){
 	
+	console.log("sphere starts");
+	
 	this.radius = radius;
+
+	var vecNr = n*m*9;
 	
-	var vecNr = n*m*6*3;
-	
-	var x = function(u,v){
+	x = function(u,v){
+		console.log("x: " + radius * Math.sin(u) * Math.cos(v));
+		// console.log(radius + ", " + Math.sin(u) + ", " + Math.cos(v));
 		return this.radius * Math.sin(u) * Math.cos(v);
 	}
 	
-	var y = function(u,y){
-		return this.radius * Math.sin(u) * Math.sin(v);
+	var y = function(u,v){
+		console.log("y: " + radius * Math.sin(u) * Math.sin(v));
+		return radius * Math.sin(u) * Math.sin(v);
 	}
 	
 	var z = function(u,v){
-		return this.radius * Math.cos(u);
+		console.log("z: " + radius * Math.cos(u));
+		return radius * Math.cos(u);
 	}
 	
 	var index0 = 0;
+	var index1 = 0;
 	// var index1 = 0;
 	
 	var vposition = new Float32Array(vecNr);
 	var vcolor = new Float32Array(vecNr);
 	
+	var count = 0;
+	
 	for(var i = 1 ; i <= n ; i++ ){
 		for(var j = 1 ; j <= m ; j++ ){
-			var ui1 = Math.PI*2;
-			var ui0 = Math.PI*2;
-			var vj1 = Math.PI;
-			var vj0 = Math.PI;
+			var ui1 = Math.PI * 2 / i - 1;
+			var ui0 = Math.PI * 2 / i;
+			var vj1 = Math.PI / j - 1;
+			var vj0 = Math.PI / j;
+			
+			// console.log("ui1: " + ui1 + ", ui0: " + ui0 + ", vj1: " + vj1 + " ,vj0: " + vj0);
+			vposition[index0++] = x(ui1 , vj1);
+			vposition[index0++] = y(ui1 , vj1);
+			vposition[index0++] = z(ui1 , vj1);
+			
+			vposition[index0++] = x(ui0 , vj1);
+			vposition[index0++] = y(ui0 , vj1);
+			vposition[index0++] = z(ui0 , vj1);
+			
+			vposition[index0++] = x(ui0 , vj0);
+			vposition[index0++] = y(ui0 , vj0);
+			vposition[index0++] = z(ui0 , vj0);
+			
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			vcolor[index1++] = 1;
+			
+			count++;
 		}
 	}
+	console.log(count*9 + ", " + vecNr);
+	this.posBuffer = new VertexAttributeBuffer(gl, "vertexPosition", gl.FLOAT, 3, vposition);
+	this.colorBuffer =  new VertexAttributeBuffer(gl, "vertexColor",  gl.FLOAT, 3, vcolor);
 	
+	this.draw = function(program) {
+    
+        this.posBuffer.makeActive(program);
+        this.colorBuffer.makeActive(program);
+        
+        // perform the actual drawing of the primitive 
+        // using the vertex buffer object
+        program.gl.drawArrays(program.gl.TRIANGLE_FAN, 0, vecNr);
+
+    }
 }
