@@ -24,12 +24,13 @@ window.onload = function () {
     // theScene is a global variable; it is accessed by the event handlers
     theScene = new SimpleScene(prog, [0.0 ,0.0, 0.0, 1.0]);
     
+    var imatrix = mat4.identity();
     // add an object to the scene
     // theScene.addShape(new TriangleFan(gl));
     // theScene.addShape(new Cube(gl , 2));
     var color1 = new Array(1,1,1);
     var color2 = new Array(0.6,0.6,0.6);
-    theScene.addShape(new Sphere(gl , 50 , 50 , 0.5 , color1 , new Array(1,0,0) , matrix));
+    theScene.addShape(new Sphere(gl , 50 , 50 , 0.5 , color1 , new Array(1,0,0) , imatrix));
     theScene.addShape(new Torus(gl , 20, 20, 1, 0.5 , color1, color2 ));
     // theScene.addShape(new TriangleStrip(gl));
     
@@ -44,11 +45,24 @@ window.onload = function () {
     theExplorer = new SceneExplorer(canvas,true,theScene);
     
     //events
-    var s = document.getElementById("sphere-radio");
-    	s.onclick = function(event){
-    	var sdiv = document.getElementById("properties-sphere");
-    	console.log(sdiv);
-    	sdiv.setAttribute('display:' , 'block');
+    $("#properties-sphere").hide();
+    $("#properties-torus").hide();
+    $("#properties-cube").hide();
+    
+    var sr = document.getElementById("sphere-radio");
+    	sr.onclick = function(event){
+    	console.log("sphere radio click");
+    	$("#properties-sphere").show();
+   		$("#properties-torus").hide();
+    	$("#properties-cube").hide();
+    }
+    
+    var st = document.getElementById("torus-radio");
+    st.onclick = function(event){
+    	console.log("torus radio click");
+    	$("#properties-sphere").hide();
+   		$("#properties-torus").show();
+    	$("#properties-cube").hide();
     }
 };
 
