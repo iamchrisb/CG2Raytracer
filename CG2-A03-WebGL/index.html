@@ -56,6 +56,21 @@
         }    
     </script>
     
+    <style>
+    	input {
+    		margin: 10px;
+    	}
+    	
+    	#properties-sphere {
+    		width: 280px;
+    		height: auto;
+    		background-color: rgba(240,240,240,1.0);
+    		margin-left: 10px;
+    		padding: 10px;
+    	};
+    	
+    </style>
+    
 </head>
 
 <body style="bgcolor:white; font-family:helvetica;">
@@ -150,6 +165,46 @@
       </tr>
     </table>
     <p>
+    <p style="margin-left: 10px; color: #dd0000">
+    	Please choose on of the shapes:
+    </p>	
+   	<div style="width: 260px; background-color: rgb(240,240,240); height: 40px; margin: 10px; padding: 10px;">
+   		<form name="shape-form" id="shape-form">
+   			<input type="radio" name="choose" value="cube">
+   				Cube
+   			</input>
+   			<input type="radio" name="choose" value="sphere">
+   				Sphere
+   			</input>
+   			<input type="radio" name="choose" value="torus">
+   				Torus
+   			</input>
+   		</form>
+   	</div>
+   	
+   	<p style="color: #d00; margin-left: 10px;">
+   		Please specify the parameters for the shape:
+   	</p>
+   	<div id="properties-sphere">
+   		<form>
+   			N:
+   			<input type="text">
+   				
+   			</input>
+   			<br>
+   			M:
+   			<input type="text">
+   				
+   			</input>
+   			<br>
+   			Radius: 
+   			<input type="text">
+   				
+   			</input>
+   			<br>
+   			<input type="button" value="Ok" />
+   		</form>
+   	</div>
 
       
 </body>

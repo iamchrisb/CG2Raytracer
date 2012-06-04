@@ -167,7 +167,7 @@ Sphere = function(gl, n, m, radius){
 
 	var vecNr = n*m*3*3;
 	
-	x = function(u,v){
+	var x = function(u,v){
 		// console.log("x: " + radius * Math.sin(u) * Math.cos(v));
 		return radius * Math.sin(u) * Math.cos(v);
 	}
@@ -224,53 +224,53 @@ Sphere = function(gl, n, m, radius){
 			vposition[index0++] = z(u1 , v0);
 			
 			if(i*j % 2 == 0){
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
 			
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
 			
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
 			
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
 			
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
 			
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
-			vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
+				vcolor[index1++] = 1;
 			}else{
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
 			
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
 			
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
 			
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
 			
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
 			
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
-			vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
+				vcolor[index1++] = 0.6;
 			}
 			
 		}
@@ -293,4 +293,55 @@ Sphere = function(gl, n, m, radius){
         program.gl.drawArrays(program.gl.TRIANGLES, 0, vecNr);
 
     }
+}
+
+Torus = function(gl, n, m, rad1, rad2){
+	
+	if(rad1 > rad2){
+		
+		this.Radius = rad1;
+		this.radius = rad2;
+	
+		var vecNr = n*m; //TODO: right amount of vecs
+	
+		var x = function(u,v){
+			return ( Radius + radius * Math.cos(u) ) * Math.cos(v);
+		}
+	
+		var y = function(u,v){
+			return ( Radius + radius * Math.cos(u) ) * Math.sin(v);
+		}
+	
+		var z = function(u,v){
+			return radius * Math.sin(u);
+		}
+	
+		var index0 = 0;
+		var index1 = 0;
+	
+		//prepare the buffers
+		//TODO: find out real length
+		var vposition = new Float32Array(vecNr * 3);
+		var vcolor = new Float32Array(vecNr * 3);
+	
+		for(var i = 1 ; i <= n ; i++){
+			for(var j = 1 ; j <= m ; j++) {
+				//TODO: implementation
+			}
+		}
+	
+		this.posBuffer = new VertexAttributeBuffer(gl, "vertexPosition", gl.FLOAT, 3, vposition);
+		this.colorBuffer =  new VertexAttributeBuffer(gl, "vertexColor",  gl.FLOAT, 3, vcolor);
+	
+		this.draw = function(program) {
+   	 
+       	 this.posBuffer.makeActive(program);
+       	 this.colorBuffer.makeActive(program);
+        
+        	// perform the actual drawing of the primitive 
+        	// using the vertex buffer object
+        	program.gl.drawArrays(program.gl.TRIANGLES, 0, vecNr);
+
+    	}
+   	}
 }
