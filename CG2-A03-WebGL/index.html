@@ -13,6 +13,7 @@
     <script type="text/javascript" src="explorer.js"></script>
     <script type="text/javascript" src="shapes.js"></script>
     <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
     
     <!-- vertex shader source code -->
     <script id="vert_shader" type="x-shader/x-vertex">
@@ -61,14 +62,16 @@
     		margin: 10px;
     	}
     	
-    	#properties-sphere {
+    	#properties-sphere, #properties-torus, #properties-cube {
     		width: 280px;
     		height: auto;
     		background-color: rgba(240,240,240,1.0);
     		margin-left: 10px;
     		padding: 10px;
     	};
-    	
+    	#properties-sphere {
+    		
+    	}
     </style>
     
 </head>
@@ -80,7 +83,7 @@
     <tr><td>
     
     <!-- the canvas in which to draw using WebGL -->
-    <canvas id="webgl_canvas" width="300" height="300"></canvas>
+    <canvas id="webgl_canvas" width="600" height="600"></canvas>
     
     <!-- next row in layout table -->
     </td><td>
@@ -170,10 +173,10 @@
     </p>	
    	<div style="width: 260px; background-color: rgb(240,240,240); height: 40px; margin: 10px; padding: 10px;">
    		<form name="shape-form" id="shape-form">
-   			<input type="radio" name="choose" value="cube">
+   			<input type="radio" name="choose" value="cube" onclick="printCode(event)">
    				Cube
    			</input>
-   			<input type="radio" name="choose" value="sphere">
+   			<input type="radio" name="choose" value="sphere" id="sphere-radio">
    				Sphere
    			</input>
    			<input type="radio" name="choose" value="torus">
@@ -185,28 +188,48 @@
    	<p style="color: #d00; margin-left: 10px;">
    		Please specify the parameters for the shape:
    	</p>
-   	<div id="properties-sphere">
+   	<div id="properties-sphere" >
    		<form>
    			N:
-   			<input type="text">
-   				
-   			</input>
+   			<input type="text"/>
    			<br>
    			M:
-   			<input type="text">
-   				
-   			</input>
+   			<input type="text"/>
    			<br>
    			Radius: 
-   			<input type="text">
-   				
-   			</input>
+   			<input type="text"/>
    			<br>
    			<input type="button" value="Ok" />
    		</form>
    	</div>
 
-      
+	<div id="properties-torus" >
+   		<form>
+   			N:
+   			<input type="text"/>
+   			<br>
+   			M:
+   			<input type="text"/>
+   			<br>
+   			Radius: 
+   			<input type="text"/>
+   			<br>
+   			radius:
+   			<input type="text"/>
+   			
+   			<br>
+   			<input type="button" value="Ok" />
+   		</form>
+   	</div>
+
+    <div id="properties-cube" >
+   		<form>
+   			length:
+   			<input type="text"/>
+   			<br>
+   			<input type="button" value="Ok" />
+   		</form>
+   	</div>
 </body>
 
 </html>

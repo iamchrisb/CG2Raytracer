@@ -159,27 +159,28 @@ TriangleStrip = function(gl) {
     }
 } 
 
-Sphere = function(gl, n, m, radius){
+Sphere = function(gl, n, m, radius, color1, color2, matrix){
 	
 	console.log("sphere starts");
 	
 	this.radius = radius;
+	this.matrix = matrix;
 
 	var vecNr = n*m*3*3;
 	
-	var x = function(u,v){
+	this.x = function(u,v){
 		// console.log("x: " + radius * Math.sin(u) * Math.cos(v));
-		return radius * Math.sin(u) * Math.cos(v);
+		return this.radius * Math.sin(u) * Math.cos(v);
 	}
 	
-	var y = function(u,v){
+	this.y = function(u,v){
 		// console.log("y: " + radius * Math.sin(u) * Math.sin(v));
-		return radius * Math.sin(u) * Math.sin(v);
+		return this.radius * Math.sin(u) * Math.sin(v);
 	}
 	
-	var z = function(u,v){
+	this.z = function(u,v){
 		// console.log("z: " + radius * Math.cos(u));
-		return radius * Math.cos(u);
+		return this.radius * Math.cos(u);
 	}
 	var u0, u1, v0 , v1;
 	
@@ -199,79 +200,79 @@ Sphere = function(gl, n, m, radius){
 			
 			// console.log("u1 : " + u1 + ", u0: " + u0 + ", v1: " + v1 + ", v0: " + v0);
 			
-			vposition[index0++] = x(u0 , v1);
-			vposition[index0++] = y(u0 , v1);
-			vposition[index0++] = z(u0 , v1);
+			vposition[index0++] = this.x(u0 , v1);
+			vposition[index0++] = this.y(u0 , v1);
+			vposition[index0++] = this.z(u0 , v1);
 			
-			vposition[index0++] = x(u1 , v1);
-			vposition[index0++] = y(u1 , v1);
-			vposition[index0++] = z(u1 , v1);
+			vposition[index0++] = this.x(u1 , v1);
+			vposition[index0++] = this.y(u1 , v1);
+			vposition[index0++] = this.z(u1 , v1);
 			
-			vposition[index0++] = x(u0 , v0);
-			vposition[index0++] = y(u0 , v0);
-			vposition[index0++] = z(u0 , v0);
+			vposition[index0++] = this.x(u0 , v0);
+			vposition[index0++] = this.y(u0 , v0);
+			vposition[index0++] = this.z(u0 , v0);
 			
-			vposition[index0++] = x(u1 , v1);
-			vposition[index0++] = y(u1 , v1);
-			vposition[index0++] = z(u1 , v1);
+			vposition[index0++] = this.x(u1 , v1);
+			vposition[index0++] = this.y(u1 , v1);
+			vposition[index0++] = this.z(u1 , v1);
 			
-			vposition[index0++] = x(u0 , v0);
-			vposition[index0++] = y(u0 , v0);
-			vposition[index0++] = z(u0 , v0);
+			vposition[index0++] = this.x(u0 , v0);
+			vposition[index0++] = this.y(u0 , v0);
+			vposition[index0++] = this.z(u0 , v0);
 			
-			vposition[index0++] = x(u1 , v0);
-			vposition[index0++] = y(u1 , v0);
-			vposition[index0++] = z(u1 , v0);
+			vposition[index0++] = this.x(u1 , v0);
+			vposition[index0++] = this.y(u1 , v0);
+			vposition[index0++] = this.z(u1 , v0);
 			
 			if(i*j % 2 == 0){
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
 			
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
 			
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
 			
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
 			
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
 			
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
-				vcolor[index1++] = 1;
-			}else{
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
+				}else{
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
 			
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
 			
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
 			
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
 			
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
 			
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
-				vcolor[index1++] = 0.6;
-			}
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
+				}
 			
 		}
 	}
@@ -295,25 +296,33 @@ Sphere = function(gl, n, m, radius){
     }
 }
 
-Torus = function(gl, n, m, rad1, rad2){
+Torus = function(gl, n, m, rad1, rad2, color1, color2){
+	
+	this.Radius = rad1;
+	this.radius = rad2;
+	
+	this.color1 = color1;
+	console.log(color1);
+	this.color2 = color2;
+	console.log(color2);
 	
 	if(rad1 > rad2){
-		
-		this.Radius = rad1;
-		this.radius = rad2;
 	
-		var vecNr = n*m; //TODO: right amount of vecs
+		var vecNr = n*m*3*3; //TODO: right amount of vecs
 	
-		var x = function(u,v){
-			return ( Radius + radius * Math.cos(u) ) * Math.cos(v);
+		this.x = function(u,v){
+			//console.log(( this.Radius + (this.radius * Math.cos(u)) ) * Math.cos(v));
+			return ( this.Radius + (this.radius * Math.cos(u)) ) * Math.cos(v);
 		}
 	
-		var y = function(u,v){
-			return ( Radius + radius * Math.cos(u) ) * Math.sin(v);
+		this.y = function(u,v){
+			//console.log(( this.Radius + (this.radius * Math.cos(u)) ) * Math.sin(v));
+			return ( this.Radius + (this.radius * Math.cos(u)) ) * Math.sin(v);
 		}
 	
-		var z = function(u,v){
-			return radius * Math.sin(u);
+		this.z = function(u,v){
+			//console.log(this.radius * Math.sin(u));
+			return this.radius * Math.sin(u);
 		}
 	
 		var index0 = 0;
@@ -323,10 +332,93 @@ Torus = function(gl, n, m, rad1, rad2){
 		//TODO: find out real length
 		var vposition = new Float32Array(vecNr * 3);
 		var vcolor = new Float32Array(vecNr * 3);
+		
+		//variables u,v
+		var u0, u1, v0,v1;
 	
 		for(var i = 1 ; i <= n ; i++){
 			for(var j = 1 ; j <= m ; j++) {
 				//TODO: implementation
+				u1 = Math.PI * 2 / n * (i - 1);
+				u0 = Math.PI * 2 / n * i;
+				v1 = Math.PI * 2 / m * (j - 1);
+				v0 = Math.PI * 2 / m * j;
+				
+				// console.log("u1 : " + u1 + ", u0: " + u0 + ", v1: " + v1 + ", v0: " + v0);
+			
+				vposition[index0++] = this.x(u0 , v1);
+				vposition[index0++] = this.y(u0 , v1);
+				vposition[index0++] = this.z(u0 , v1);
+			
+				vposition[index0++] = this.x(u1 , v1);
+				vposition[index0++] = this.y(u1 , v1);
+				vposition[index0++] = this.z(u1 , v1);
+			
+				vposition[index0++] = this.x(u0 , v0);
+				vposition[index0++] = this.y(u0 , v0);
+				vposition[index0++] = this.z(u0 , v0);
+			
+				vposition[index0++] = this.x(u1 , v1);
+				vposition[index0++] = this.y(u1 , v1);
+				vposition[index0++] = this.z(u1 , v1);
+			
+				vposition[index0++] = this.x(u0 , v0);
+				vposition[index0++] = this.y(u0 , v0);
+				vposition[index0++] = this.z(u0 , v0);
+			
+				vposition[index0++] = this.x(u1 , v0);
+				vposition[index0++] = this.y(u1 , v0);
+				vposition[index0++] = this.z(u1 , v0);
+				
+				if(i*j % 2 == 0){
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
+			
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
+			
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
+			
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
+			
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
+			
+					vcolor[index1++] = color1[0];
+					vcolor[index1++] = color1[1];
+					vcolor[index1++] = color1[2];
+				}else{
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
+			
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
+			
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
+			
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
+			
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
+			
+					vcolor[index1++] = color2[0];
+					vcolor[index1++] = color2[1];
+					vcolor[index1++] = color2[2];
+				}
 			}
 		}
 	

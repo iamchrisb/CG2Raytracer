@@ -27,7 +27,10 @@ window.onload = function () {
     // add an object to the scene
     // theScene.addShape(new TriangleFan(gl));
     // theScene.addShape(new Cube(gl , 2));
-    theScene.addShape(new Sphere(gl , 50 , 50 , 2 ));
+    var color1 = new Array(1,1,1);
+    var color2 = new Array(0.6,0.6,0.6);
+    theScene.addShape(new Sphere(gl , 50 , 50 , 0.5 , color1 , new Array(1,0,0) , matrix));
+    theScene.addShape(new Torus(gl , 20, 20, 1, 0.5 , color1, color2 ));
     // theScene.addShape(new TriangleStrip(gl));
     
     // set the camera's viewpoint and viewing direction
@@ -39,6 +42,14 @@ window.onload = function () {
     // the SceneExporer is also a global object; 
     // it handles events to manipulate the scene
     theExplorer = new SceneExplorer(canvas,true,theScene);
+    
+    //events
+    var s = document.getElementById("sphere-radio");
+    	s.onclick = function(event){
+    	var sdiv = document.getElementById("properties-sphere");
+    	console.log(sdiv);
+    	sdiv.setAttribute('display:' , 'block');
+    }
 };
 
 
@@ -50,6 +61,12 @@ window.onload = function () {
     and calls the respective functions of the scene's 
     camera object.
 */
+
+printCode = function(event){
+	console.log("ich werde ausgefuehrt du flachwixer :)");
+	var chkText = event.srcElement.parentElement.lastChild.innerHTML; 
+	console.log(chkText);
+}
      
 updateCamera = function(scene) {
 
