@@ -27,11 +27,11 @@ window.onload = function () {
     var imatrix = mat4.identity();
     // add an object to the scene
     // theScene.addShape(new TriangleFan(gl));
-    // theScene.addShape(new Cube(gl , 2));
+    // theScene.addShape(new Cube(gl , 0.8));
     var color1 = new Array(1,1,1);
     var color2 = new Array(0.6,0.6,0.6);
-    theScene.addShape(new Sphere(gl , 50 , 50 , 0.5 , color1 , new Array(1,0,0) , imatrix));
-    theScene.addShape(new Torus(gl , 20, 20, 1, 0.5 , color1, color2 ));
+    // theScene.addShape(new Sphere(gl , 50 , 50 , 0.5 , color1 , new Array(1,0,0) , imatrix));
+    // theScene.addShape(new Torus(gl , 20, 20, 1, 0.4 , color1, color2 ));
     // theScene.addShape(new TriangleStrip(gl));
     
     // set the camera's viewpoint and viewing direction
@@ -51,7 +51,6 @@ window.onload = function () {
     
     var sr = document.getElementById("sphere-radio");
     	sr.onclick = function(event){
-    	console.log("sphere radio click");
     	$("#properties-sphere").show();
    		$("#properties-torus").hide();
     	$("#properties-cube").hide();
@@ -59,10 +58,81 @@ window.onload = function () {
     
     var st = document.getElementById("torus-radio");
     st.onclick = function(event){
-    	console.log("torus radio click");
     	$("#properties-sphere").hide();
    		$("#properties-torus").show();
     	$("#properties-cube").hide();
+    }
+    
+    var sc = document.getElementById("cube-radio");
+    sc.onclick = function(event){
+    	$("#properties-sphere").hide();
+   		$("#properties-torus").hide();
+    	$("#properties-cube").show();
+    }
+    
+    var sb = document.getElementById("sphere-button");
+    sb.onclick = function(event){
+    	var sform = document.forms["sphere-form"];
+    	if(sform){
+    		var fn = parseFloat(sform.elements["n"].value);
+    		var fm = parseFloat(sform.elements["m"].value);
+    		var fr = parseFloat(sform.elements["radius"].value);
+    		
+    		var color1 = new Array(1,1,1);
+    		var color2 = new Array(0.6,0.6,0.6);
+    		
+    		console.log(gl);
+    		theScene.addShape( new Sphere(gl , fn , fm , fr , color1 , color2 , mat4.identity()));
+    		
+    		updateCamera(theScene);
+    	}
+    }
+    
+    var sbr = document.getElementById("sphere-remove");
+    sbr.onclick = function(event){
+    	theScene.removeShape();
+    	updateCamera(theScene);
+    }
+    
+    var tb = document.getElementById("torus-button");
+    tb.onclick = function(event){
+    	var tform = document.forms["torus-form"];
+    	console.log("click");
+    	if(tform){
+    		var fn = parseFloat(tform.elements["n"].value);
+    		var fm = parseFloat(tform.elements["m"].value);
+    		var fR = parseFloat(tform.elements["Radius"].value);
+    		var fr = parseFloat(tform.elements["radius"].value);
+    		
+    		var color1 = new Array(1,1,1);
+    		var color2 = new Array(0.6,0.6,0.6);
+    		
+    		theScene.addShape( new Torus(gl , fn , fm , fR , fr , color1 , color2 ));
+    		updateCamera(theScene);
+    	}
+    }
+    
+    var tbr = document.getElementById("torus-remove");
+    tbr.onclick = function(event){
+    	theScene.removeShape();
+    	updateCamera(theScene);
+    }
+    
+    var cb = document.getElementById("cube-button");
+    cb.onclick = function(event){
+    	var cform = document.forms["cube-form"];
+    	if(cform){
+    		var fl = parseFloat(cform.elements["len"].value);
+    		console.log(fl);
+    		theScene.addShape( new Cube(gl , fl));
+    		updateCamera(theScene);
+    	}
+    }
+    
+    var cbr = document.getElementById("cube-remove");
+    cbr.onclick = function(event){
+    	theScene.removeShape();
+    	updateCamera(theScene);
     }
 };
 
@@ -75,12 +145,6 @@ window.onload = function () {
     and calls the respective functions of the scene's 
     camera object.
 */
-
-printCode = function(event){
-	console.log("ich werde ausgefuehrt du flachwixer :)");
-	var chkText = event.srcElement.parentElement.lastChild.innerHTML; 
-	console.log(chkText);
-}
      
 updateCamera = function(scene) {
 

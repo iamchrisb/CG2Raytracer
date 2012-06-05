@@ -170,7 +170,7 @@
     </p>	
    	<div style="width: 260px; background-color: rgb(240,240,240); height: 40px; margin: 10px; padding: 10px;">
    		<form name="shape-form" id="shape-form">
-   			<input type="radio" name="choose" value="cube" onclick="printCode(event)">
+   			<input type="radio" name="choose" value="cube" id="cube-radio">
    				Cube
    			</input>
    			<input type="radio" name="choose" value="sphere" id="sphere-radio">
@@ -186,45 +186,48 @@
    		Please specify the parameters for the shape:
    	</p>
    	<div id="properties-sphere" >
-   		<form>
+   		<form name="sphere-form">
    			N:
-   			<input type="text"/>
+   			<input type="text" name="n"/>
    			<br>
    			M:
-   			<input type="text"/>
+   			<input type="text" name="m"/>
    			<br>
    			Radius: 
-   			<input type="text"/>
+   			<input type="text" name="radius"/>
    			<br>
-   			<input type="button" value="Ok" />
+   			<input type="button" value="Ok" id="sphere-button"/>
+   			<input type="button" value="Remove" id="sphere-remove"/>
    		</form>
    	</div>
 
 	<div id="properties-torus" >
-   		<form>
+   		<form name="torus-form">
    			N:
-   			<input type="text"/>
+   			<input type="text" name="n"/>
    			<br>
    			M:
-   			<input type="text"/>
+   			<input type="text" name="m"/>
    			<br>
    			Radius: 
-   			<input type="text"/>
+   			<input type="text" name="Radius"/>
    			<br>
    			radius:
-   			<input type="text"/>
+   			<input type="text" name="radius"/>
    			
    			<br>
-   			<input type="button" value="Ok" />
+   			<input type="button" value="Ok" id="torus-button"/>
+   			<input type="button" value="Remove" id="torus-remove"/>
    		</form>
    	</div>
 
     <div id="properties-cube" >
-   		<form>
+   		<form name="cube-form">
    			length:
-   			<input type="text"/>
+   			<input type="text" name="len"/>
    			<br>
-   			<input type="button" value="Ok" />
+   			<input type="button" value="Ok" id="cube-button"/>
+   			<input type="button" value="Remove" id="cube-remove"/>
    		</form>
    	</div>
 </body>

@@ -46,6 +46,10 @@ SimpleScene = function(program, backgroundColor) {
         this.shapes.push(shape);
     }
     
+    this.removeShape = function() {
+    	this.shapes.pop();
+    }
+    
     /* 
        Method: draw the scene
     */
