@@ -24,13 +24,12 @@ window.onload = function () {
     // theScene is a global variable; it is accessed by the event handlers
     theScene = new SimpleScene(prog, [0.0 ,0.0, 0.0, 1.0]);
     
-    var imatrix = mat4.identity();
     // add an object to the scene
     // theScene.addShape(new TriangleFan(gl));
     // theScene.addShape(new Cube(gl , 0.8));
-    var color1 = new Array(1,1,1);
-    var color2 = new Array(0.6,0.6,0.6);
-    // theScene.addShape(new Sphere(gl , 50 , 50 , 0.5 , color1 , new Array(1,0,0) , imatrix));
+    // var color1 = new Array(1,1,1);
+    // var color2 = new Array(0.6,0.6,0.6);
+    // theScene.addShape(new Sphere(gl , 50 , 50 , 0.5 , color1 , new Array(1,0,0) ));
     // theScene.addShape(new Torus(gl , 20, 20, 1, 0.4 , color1, color2 ));
     // theScene.addShape(new TriangleStrip(gl));
     
@@ -81,8 +80,12 @@ window.onload = function () {
     		var color1 = new Array(1,1,1);
     		var color2 = new Array(0.6,0.6,0.6);
     		
-    		console.log(gl);
-    		theScene.addShape( new Sphere(gl , fn , fm , fr , color1 , color2 , mat4.identity()));
+    		var x = new Sphere(gl , fn , fm , fr , color1 , color2 );
+    		
+    		mat4.rotateX(x.mx , 30 * 3.14115/180);
+			mat4.translate(x.mx , [ -1 , 0 , 0 ]);
+				
+    		theScene.addShape( x );
     		
     		updateCamera(theScene);
     	}
@@ -107,7 +110,12 @@ window.onload = function () {
     		var color1 = new Array(1,1,1);
     		var color2 = new Array(0.6,0.6,0.6);
     		
-    		theScene.addShape( new Torus(gl , fn , fm , fR , fr , color1 , color2 ));
+    		var x = new Torus(gl , fn , fm , fR , fr , color1 , color2 )
+    		
+    		mat4.rotateX(x.mx , 30 * 3.14115/180);
+			mat4.translate(x.mx , [ 1 , 0 , 0 ]);
+    		
+    		theScene.addShape( x );
     		updateCamera(theScene);
     	}
     }
@@ -123,8 +131,13 @@ window.onload = function () {
     	var cform = document.forms["cube-form"];
     	if(cform){
     		var fl = parseFloat(cform.elements["len"].value);
-    		console.log(fl);
-    		theScene.addShape( new Cube(gl , fl));
+    		
+    		var x = new Cube(gl , fl);
+    		
+    		mat4.rotateX(x.mx , 30 * 3.14115/180);
+			mat4.translate(x.mx , [ 0 , -1.5 , 0 ]);
+			
+    		theScene.addShape( x );
     		updateCamera(theScene);
     	}
     }

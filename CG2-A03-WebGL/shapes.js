@@ -84,6 +84,9 @@ TriangleFan = function(gl, material) {
 }    
 
 Cube = function(gl , l){
+	
+	this.mx = mat4.identity();
+	
 	var vposition = new Float32Array([ 
 									   //near and far planes
 									   l/2,-l/2,l/2, -l/2,-l/2,l/2, l/2,l/2,l/2, 
@@ -165,6 +168,8 @@ Sphere = function(gl, n, m, radius, color1, color2, matrix){
 	
 	this.radius = radius;
 	this.matrix = matrix;
+	
+	this.mx = mat4.identity();
 
 	var vecNr = n*m*3*3;
 	
@@ -224,7 +229,9 @@ Sphere = function(gl, n, m, radius, color1, color2, matrix){
 			vposition[index0++] = this.y(u1 , v0);
 			vposition[index0++] = this.z(u1 , v0);
 			
-			if(i*j % 2 == 0){
+			//var i = i + j;
+			console.log(i);
+			if( ((i + j) % 2) == 0){
 					vcolor[index1++] = color1[0];
 					vcolor[index1++] = color1[1];
 					vcolor[index1++] = color1[2];
@@ -301,10 +308,10 @@ Torus = function(gl, n, m, rad1, rad2, color1, color2){
 	this.Radius = rad1;
 	this.radius = rad2;
 	
+	this.mx = mat4.identity();
+	
 	this.color1 = color1;
-	console.log(color1);
 	this.color2 = color2;
-	console.log(color2);
 	
 	if(rad1 > rad2){
 	
@@ -370,7 +377,7 @@ Torus = function(gl, n, m, rad1, rad2, color1, color2){
 				vposition[index0++] = this.y(u1 , v0);
 				vposition[index0++] = this.z(u1 , v0);
 				
-				if(i*j % 2 == 0){
+				if( ((i + j ) % 2 ) == 0){
 					vcolor[index1++] = color1[0];
 					vcolor[index1++] = color1[1];
 					vcolor[index1++] = color1[2];
