@@ -75,6 +75,7 @@ SimpleScene = function(program, backgroundColor) {
 				mv = mat4.multiply(mv, this.camera.modelToEye());
 				mv = mat4.multiply(mv, this.worldTransform);
 				mv = mat4.multiply(mv, this.shapes[i].mx);
+				
 				gl.uniformMatrix4fv(mvLocation, false, mv);
 
 				// calculate and set projection matrix as uniform shader variable

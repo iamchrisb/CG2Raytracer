@@ -171,7 +171,7 @@ Sphere = function(gl, n, m, radius, color1, color2, matrix){
 	
 	this.mx = mat4.identity();
 
-	var vecNr = n*m*3*3;
+	var vecNr = n*m*6;
 	
 	this.x = function(u,v){
 		// console.log("x: " + radius * Math.sin(u) * Math.cos(v));
@@ -198,10 +198,10 @@ Sphere = function(gl, n, m, radius, color1, color2, matrix){
 	
 	for(var i = 1 ; i <= n ; i++ ){
 		for(var j = 1 ; j <= m ; j++ ){
-			u1 = Math.PI * 2 / n * (i - 1);
-			u0 = Math.PI * 2 / n * i;
-			v1 = Math.PI / m * (j - 1);
-			v0 = Math.PI / m * j;
+			u1 = Math.PI / n * (i - 1);
+			u0 = Math.PI / n * i;
+			v1 = Math.PI * 2/ m * (j - 1);
+			v0 = Math.PI * 2/ m * j;
 			
 			// console.log("u1 : " + u1 + ", u0: " + u0 + ", v1: " + v1 + ", v0: " + v0);
 			
